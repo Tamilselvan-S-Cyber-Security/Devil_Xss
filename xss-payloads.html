@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devil_XSS - XSS Payloads</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Sixtyfour+Convergence&family=Tiny5&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Simple table styles */
+        body {
+            background: var(--bg-primary);
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-secondary);
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            color: #ffffff;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #cccccc;
+            font-size: 1rem;
+        }
+        
+        .payloads-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ffffff;
+        }
+        
+        .payloads-table th {
+            background: var(--bg-primary);
+            color: #ffffff;
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ffffff;
+            font-weight: bold;
+        }
+        
+        .payloads-table td {
+            padding: 10px 15px;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            word-break: break-all;
+            font-family: var(--font-secondary);
+            font-size: 14px;
+        }
+        
+        .payloads-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .payloads-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .payload-number {
+            width: 60px;
+            text-align: center;
+            font-weight: bold;
+            color: #00d2d3;
+        }
+        
+        .payload-code {
+            font-family: var(--font-secondary);
+            color: #ffffff;
+        }
+        
+        .copy-btn {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-family: var(--font-primary);
+        }
+        
+        .copy-btn:hover {
+            background: transparent;
+            color: #2ed573;
+        }
+        
+        .copy-btn:hover .fa-copy {
+            display: none;
+        }
+        
+        .copy-btn:hover::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #2ed573;
+        }
+        
+        .copy-btn.copied {
+            background: #2ed573;
+            color: var(--bg-primary);
+            border-color: #2ed573;
+        }
+        
+        .copy-btn.copied:hover::after {
+            display: none;
+        }
+        
+        .stats {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #cccccc;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #ffffff;
+            padding: 50px;
+            font-size: 18px;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #888888;
+            padding: 50px;
+            font-style: italic;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .payloads-table {
+                font-size: 12px;
+            }
+            
+            .payloads-table th,
+            .payloads-table td {
+                padding: 8px;
+            }
+            
+            .copy-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .payloads-table {
+                font-size: 10px;
+            }
+            
+            .payloads-table th,
+            .payloads-table td {
+                padding: 5px;
+            }
+            
+            .copy-btn {
+                padding: 4px 8px;
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">Devil_XSS Payloads</h1>
+            <p class="subtitle">Complete XSS Payload Collection</p>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats">
+            Total Payloads: <span id="totalCount">0</span>
+        </div>
+        
+        <!-- Loading -->
+        <div id="loadingDiv" class="loading">
+            Loading payloads...
+        </div>
+        
+        <!-- Payloads Table -->
+        <div id="tableContainer" style="display: none;">
+            <table class="payloads-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">#</th>
+                        <th>XSS Payload</th>
+                        <th style="width: 100px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="payloadsTableBody">
+                    <!-- Payloads will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Payloads data
+        let allPayloads = [];
+
+        // Load payloads from wordlist.txt
+        async function loadPayloads() {
+            try {
+                const response = await fetch('../wordlist.txt');
+                const text = await response.text();
+                allPayloads = text.split('\n').filter(payload => payload.trim() !== '');
+                
+                // Update total count
+                document.getElementById('totalCount').textContent = allPayloads.length;
+                
+                // Display payloads
+                displayPayloads();
+                
+                // Hide loading and show table
+                document.getElementById('loadingDiv').style.display = 'none';
+                document.getElementById('tableContainer').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading payloads:', error);
+                document.getElementById('loadingDiv').innerHTML = '<div class="no-results">Error loading payloads. Please check if wordlist.txt exists.</div>';
+            }
+        }
+
+        // Display payloads in table format
+        function displayPayloads() {
+            const tbody = document.getElementById('payloadsTableBody');
+            
+            const payloadsHTML = allPayloads.map((payload, index) => `
+                <tr>
+                    <td class="payload-number">${index + 1}</td>
+                    <td class="payload-code">${escapeHtml(payload)}</td>
+                    <td>
+                        <button class="copy-btn" onclick="copyPayload('${escapeHtml(payload)}', this)">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            tbody.innerHTML = payloadsHTML;
+        }
+
+        // Copy payload to clipboard
+        async function copyPayload(payload, button) {
+            try {
+                await navigator.clipboard.writeText(payload);
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            } catch (error) {
+                console.error('Error copying to clipboard:', error);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = payload;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }
+        }
+
+        // Escape HTML to prevent XSS in display
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPayloads();
+        });
+    </script>
+</body>
+</html>

