@@ -198,7 +198,7 @@ DevilXSSScanner/
 ├── 🔍 url_finder.py         # Advanced URL discovery tool
 ├── 🎯 payloads.txt          # Sample XSS payloads
 ├── 📝 wordlist.txt          # Wordlist for URL discovery
-├── 📋 pyproject.toml        # Project dependencies
+├       
 ├── 📖 README.md             # Project documentation
 └── 🐛 wolf-bug.txt          # Bug reports and issues
 ```
